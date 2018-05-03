@@ -1,9 +1,12 @@
 package com.tsz;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,11 +22,67 @@ public class ParsepcapFile {
 
     private static List<String> key;
     static StringBuilder newFile=new StringBuilder();
+    /**
+     * 得到格式化json数据  退格用\t 换行用\r
+     */
+    public static String format(String jsonStr) {
+        int level = 0;
+        StringBuffer jsonForMatStr = new StringBuffer();
+        for(int i=0;i<jsonStr.length();i++){
+            char c = jsonStr.charAt(i);
+            if(level>0&&'\n'==jsonForMatStr.charAt(jsonForMatStr.length()-1)){
+                jsonForMatStr.append(getLevelStr(level));
+            }
+            switch (c) {
+                case '{':
+                case '[':
+                    jsonForMatStr.append(c+"\n");
+                    level++;
+                    break;
+                case ',':
+                    jsonForMatStr.append(c+"\n");
+                    break;
+                case '}':
+                case ']':
+                    jsonForMatStr.append("\n");
+                    level--;
+                    jsonForMatStr.append(getLevelStr(level));
+                    jsonForMatStr.append(c);
+                    break;
+                default:
+                    jsonForMatStr.append(c);
+                    break;
+            }
+        }
 
-    public static void Jsonchange(String [] args){
-        String str = "{\"result\":\"success\",\"message\":\"成功！\"}";
-        JSONObject json = JSONObject.fromObject(str);
-        System.out.println(json.toString());
+        return jsonForMatStr.toString();
+
+    }
+
+    private static String getLevelStr(int level){
+        StringBuffer levelStr = new StringBuffer();
+        for(int levelI = 0;levelI<level ; levelI++){
+            levelStr.append("\t");
+        }
+        return levelStr.toString();
+    }
+
+    public static void Jsonchange(String s){
+
+        Map map = new HashMap();
+
+        map.put("1", "abc");
+
+        map.put("2", "efg");
+
+        JSONArray array_test = new JSONArray();
+
+        array_test.add(map);
+
+        JSONObject jsonObject = JSONObject.fromObject(map);
+        System.out.println(jsonObject);
+        String json = format(jsonObject.toString());
+        System.out.println(json);
     }
 
     public static void Jsonpack(){
@@ -110,6 +169,7 @@ public class ParsepcapFile {
     public static void ParseHttp( String Sfile ) {
         Parse(Sfile,regexHttp);
         Jsonpack();
+        Jsonchange(newFile.toString());
     }
 
 }

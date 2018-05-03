@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="PcapAnalyzer" target="1.5" />
+      <module name="PcapAnalyzer" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
