@@ -1,0 +1,107 @@
+Frame:{
+	"number":" 0",
+	"wirelength":" 396 bytes",
+	"capturedlength":" 396 bytes",
+	"timestamp":" 2018-05-03 11:11:07.691"
+}Eth:{
+	"......0.........":" [
+		2
+	] LG bit",
+	".......0........":" [
+		0
+	] IG bit",
+	"destination":" 9c:e8:95:0d:80:31",
+	"source":" 6c:4b:90:2a:42:5d",
+	"type":" 0x800 (2048) [
+		ip version 4
+	]"
+}Ip:{
+	"offset":" 0",
+	"000000..":" [
+		0
+	] code point: not set",
+	"length":" 382",
+	"flags":" 0x2 (2)",
+	"destination":" 106.120.151.146",
+	".1.":" [
+		1
+	] DF: do not fragment: set",
+	"source":" 10.91.34.163",
+	"type":" 6 [
+		next: Transmission Control
+	]",
+	"version":" 4",
+	"ttl":" 128 [
+		time to live
+	]",
+	"......0.":" [
+		0
+	] ECN bit: not set",
+	"0..":" [
+		0
+	] reserved",
+	"..0":" [
+		0
+	] MF: more fragments: not set",
+	".......0":" [
+		0
+	] ECE bit: not set",
+	"checksum":" 0x0 (0) [
+		incorrect: 0xA81D
+	]",
+	"id":" 0x2254 (8788)",
+	"hlen":" 5 [
+		5 * 4 = 20 bytes,
+		 No Ip Options
+	]",
+	"diffserv":" 0x0 (0)"
+}Tcp:{
+	"..0.....":" [
+		0
+	] ack: urgent,
+	 out-of-band data",
+	"destination":" 80",
+	"ack":" 0x3C3FEEE1 (1010822881)",
+	"flags":" 0x18 (24)",
+	"source":" 64724",
+	"0.......":" [
+		0
+	] cwr: reduced (cwr)",
+	"....1...":" [
+		1
+	] ack: push current segment of data",
+	"......0.":" [
+		0
+	] ack: synchronize connection,
+	 startup",
+	".....0..":" [
+		0
+	] ack: reset connection",
+	".......0":" [
+		0
+	] fin: closing down connection",
+	"reserved":" 0",
+	"...1....":" [
+		1
+	] ack: acknowledgment",
+	"checksum":" 0x3079 (12409) [
+		incorrect: 0x7C1B
+	]",
+	"window":" 65535",
+	"urgent":" 0",
+	"hlen":" 5",
+	"seq":" 0xFF1713EA (4279702506)",
+	".0......":" [
+		0
+	] ece: ECN echo flag"
+}Udp:{
+	
+}Http:{
+	"RequestVersion":" HTTP/1.1",
+	"CACHE-CONTROL":" no-cache",
+	"USER-AGENT":" SOGOU_UPDATER",
+	"RequestMethod":" GET",
+	"COOKIE":" YYID=E2EE2772B26E7CBECC54167A44D053FC; IPLOC=CN4404; IMEVER=8.9.0.2180; SUV=00D3253ADB83C0235ADDA201DE50D642",
+	"RequestUrl":" /pyup.gif?h=E2EE2772B26E7CBECC54167A44D053FC&v=8.9.0.2180&r=6991_sogou_pinyin_8.9.0.2180_6991&UpScdbegin=1&s=1&queryscdmod=1&pushscd=0",
+	"HOST":" ime.sogou.com"
+}

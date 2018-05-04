@@ -14,7 +14,7 @@ import java.util.List;
 public class anaylsepcap {
     private static Task<Void> task;
     private static org.jnetpcap.Pcap pcap;
-    protected static void openFile(String pcapPath) {
+    protected static void openFile(String pcapPath,String outPath) {
         FileChooser fileChooser = new FileChooser();
         File file;
         //fileChooser.setTitle(Config.getString("label_open_file"));
@@ -59,15 +59,11 @@ public class anaylsepcap {
         //exkey.add("number");
         //exkey.add("timestamp");
         newFile.setexcludekey(exkey);
-        newFile.Parseall(result.toString());
+        newFile.Parseall(result.toString(),outPath);
         //output(result.toString().getBytes());
         //System.out.println(data);
     }
 
-    public void realine(String input){
-
-
-    }
 
     public static void selfcaptureOffline(File file, PcapManager.OnCapturePacketListener listener) {
         if (file == null || !file.exists() || !file.isFile()) {
@@ -128,7 +124,7 @@ public class anaylsepcap {
             if(path!=null){
                 stream = new FileOutputStream(path);
             }else {
-                stream = new FileOutputStream("D:\\Users\\zhangzhenguo\\IdeaProjects\\PcapAnalyzer\\show1.txt");
+                stream = new FileOutputStream("D:\\PcapAnalyzerResult.txt");
             }
 
             //要写入的字符串数据

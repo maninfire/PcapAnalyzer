@@ -207,13 +207,14 @@ public class ParsepcapFile {
         Jsonpack("Http:");
         //Jsonchange(newFile.toString());
     }
-    public static void Parseall(String Sfile){
+    public static void Parseall(String Sfile,String outPath){
         ParseFrame(Sfile);
         ParseEth(Sfile);
         ParseIp(Sfile);
         ParseTcp(Sfile);
         ParseUdp(Sfile);
         ParseHttp(Sfile);
-        anaylsepcap.output(newFile.toString().getBytes(),null);
+        System.out.println(newFile);
+        anaylsepcap.output(newFile.toString().getBytes(),outPath);
     }
 }
