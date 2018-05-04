@@ -21,7 +21,16 @@ public class ParsepcapFile {
     private static List<String> value;
 
     private static List<String> key;
+    private static List<String> excludekey;//这个标志用来剔除不需要的关键字
+/*setexcludekey后自，jsonpack实现自动剔除的功能。如果不设置这个参数，默认为空就不会剔除任何参数*/
     static StringBuilder newFile=new StringBuilder();
+
+    public ParsepcapFile(){
+        excludekey=null;
+    }
+    public void setexcludekey(List<String> key){
+        this.excludekey=key;
+    }
     /**
      * 得到格式化json数据  退格用\t 换行用\r
      */
@@ -85,7 +94,29 @@ public class ParsepcapFile {
         System.out.println(json);
     }
 
-    public static void Jsonpack(){
+    public static void Jsonpack(String symbols){
+        Map<String,String> map = new HashMap<String, String>();
+        for(int i =0;i<key.size();i++){
+            int br=0;
+            if(excludekey!=null){
+                for(int j=0;j<excludekey.size();j++){
+                    if(key.get(i).equals(excludekey.get(j))){
+                        br=1;
+                    }
+                }
+            }
+            if(br==1){
+                //br=0;
+                continue;
+            }
+            map.put(key.get(i),value.get(i));
+        }
+        JSONArray array_json = new JSONArray();
+        //Jsonchange("");
+        array_json.add(map);
+        JSONObject jsonObject = JSONObject.fromObject(map);
+        String json = format(jsonObject.toString());
+        /*
         StringBuilder result=new StringBuilder();
         result.append("{");
         for(int i =0;i<key.size();i++){
@@ -94,8 +125,9 @@ public class ParsepcapFile {
             result.append(value.get(i));
             result.append(",");
         }
-        result.append("}");
-        newFile.append(result);
+        result.append("}");*/
+        newFile.append(symbols);
+        newFile.append(json);
         //output(result.toString().getBytes());
     }
 
@@ -147,29 +179,41 @@ public class ParsepcapFile {
                 "Frame:                         captured length = 396 bytes\n" +
                 "Frame:";
         Parse(Sfile,regexFrame);
+        Jsonpack("Frame:");
     }
     public static void ParseEth( String Sfile ){
         Parse(Sfile,regexEth);
-
+        Jsonpack("Eth:");
     }
 
 
     public static void ParseIp( String Sfile ) {
         Parse(Sfile,regexIp);
+        Jsonpack("Ip:");
     }
 
     public static void ParseTcp( String Sfile ) {
         Parse(Sfile,regexTcp);
+        Jsonpack("Tcp:");
     }
 
     public static void ParseUdp( String Sfile ) {
         Parse(Sfile,regexUdp);
+        Jsonpack("Udp:");
     }
 
     public static void ParseHttp( String Sfile ) {
         Parse(Sfile,regexHttp);
-        Jsonpack();
-        Jsonchange(newFile.toString());
+        Jsonpack("Http:");
+        //Jsonchange(newFile.toString());
     }
-
+    public static void Parseall(String Sfile){
+        ParseFrame(Sfile);
+        ParseEth(Sfile);
+        ParseIp(Sfile);
+        ParseTcp(Sfile);
+        ParseUdp(Sfile);
+        ParseHttp(Sfile);
+        anaylsepcap.output(newFile.toString().getBytes(),null);
+    }
 }

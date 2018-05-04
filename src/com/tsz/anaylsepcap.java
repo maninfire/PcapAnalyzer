@@ -14,15 +14,21 @@ import java.util.List;
 public class anaylsepcap {
     private static Task<Void> task;
     private static org.jnetpcap.Pcap pcap;
-    protected static void openFile() {
+    protected static void openFile(String pcapPath) {
         FileChooser fileChooser = new FileChooser();
+        File file;
         //fileChooser.setTitle(Config.getString("label_open_file"));
         fileChooser.setInitialDirectory(new File("."));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All Files", "*.*"),
                 new FileChooser.ExtensionFilter("libpcap", "*.pcap")
         );
-        File file = new File("D:\\Users\\zhangzhenguo\\IdeaProjects\\PcapAnalyzer-master\\teding.pcap");//fileChooser.showOpenDialog(stage);
+        if(pcapPath!=null){
+            file = new File(pcapPath);//fileChooser.showOpenDialog(stage);
+        }else {
+            file = new File("D:\\Users\\zhangzhenguo\\IdeaProjects\\PcapAnalyzer-master\\teding.pcap");//fileChooser.showOpenDialog(stage);
+        }
+
         if (file == null || !file.exists()) {
             System.err.println("Can't find file:" + file);
             return;
@@ -41,17 +47,20 @@ public class anaylsepcap {
                 Config.setTimestamp(packet.getCaptureHeader().timestampInMicros());
             }
             org.jnetpcap.packet.PcapPacket packetCopy = new org.jnetpcap.packet.PcapPacket(packet); // 获取副本
-            String test="";
-            System.out.println(packetCopy);
-
+            //System.out.println(packetCopy);
             data2.add(packetCopy.toString());
             data.add(packetCopy.toString());
         });
         for(String i:data){
             result.append(i);
         }
-        ParsepcapFile.ParseHttp(result.toString());
-        output(result.toString().getBytes());
+        ParsepcapFile newFile=new ParsepcapFile();
+        List<String> exkey=new ArrayList<>();
+        //exkey.add("number");
+        //exkey.add("timestamp");
+        newFile.setexcludekey(exkey);
+        newFile.Parseall(result.toString());
+        //output(result.toString().getBytes());
         //System.out.println(data);
     }
 
@@ -112,11 +121,16 @@ public class anaylsepcap {
         }
     }
 
-    public static void output(byte[] outputcontent){
+    public static void output(byte[] outputcontent,String path){
         OutputStream stream = null;
         try {
             //实例化对象
-            stream = new FileOutputStream("D:\\Users\\zhangzhenguo\\IdeaProjects\\PcapAnalyzer-master\\show.txt");
+            if(path!=null){
+                stream = new FileOutputStream(path);
+            }else {
+                stream = new FileOutputStream("D:\\Users\\zhangzhenguo\\IdeaProjects\\PcapAnalyzer\\show1.txt");
+            }
+
             //要写入的字符串数据
             String strings = "OutputStreamp测试写入数据";
             //将字符串数据转换为字节数组
